@@ -13,15 +13,17 @@ const loadSearchResult = () => {
 
 // Display Search Result
 const displaySearchResult = data => {
+    const result = getElement('result');
+    result.textContent = ``;
+    
     if(data.status) {
-        const result = getElement('result');
         const phoneList = data.data;
         phoneList.forEach(phone => {
             const div = document.createElement('div');
             div.classList.add('col');
             div.innerHTML = `
                 <div class="card shadow p-2 mx-auto" style="width: 18rem;">
-                    <img src="${phone.image}" class="card-img-top" alt="...">
+                    <img src="${phone.image}" class="card-img-top" alt="Phone Picture">
                     <div class="card-body text-center">
                         <h6>${phone.brand}</h6>
                         <h4 class="card-title">${phone.phone_name}</h4>
