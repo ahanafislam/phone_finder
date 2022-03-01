@@ -71,6 +71,20 @@ const displayPhoneDetail = data => {
         const phone = data.data;
         const div = document.createElement('div');
         div.classList.add("card", "shadow", "p-4", "text-center", "text-md-start", "mx-auto");
+        let sensors = '';
+        // If phone object have sensors 
+        if(phone.mainFeatures.sensors) {
+            const li = document.createElement('li')
+            li.innerText = `<span class="text-phone-arena me-3">Sensors:</span>`
+            phone.mainFeatures.sensors.forEach( element => {
+                const span = document.createElement('span');
+                span.innerText = `${element}, `;
+                li.appendChild(span);
+            }
+            );
+            sensors = li;
+        }
+
         div.innerHTML = `
             <div class="d-md-flex flex-row justify-content-evenly align-items-center">
             <div class="mb-3">
@@ -89,7 +103,8 @@ const displayPhoneDetail = data => {
                     <li class="list-group-item"><span class="text-phone-arena me-3">Storage:</span> ${phone.mainFeatures.storage}</li>
                     <li class="list-group-item"><span class="text-phone-arena me-3">Display:</span> ${phone.mainFeatures.displaySize}</li>
                     <li class="list-group-item"><span class="text-phone-arena me-3">Chipset:</span> ${phone.mainFeatures.chipSet ? phone.mainFeatures.chipSet : "Chipset Info Not Found" }</li>
-                    <li class="list-group-item"><span class="text-phone-arena me-3">Memory:</span> ${phone.mainFeatures.memory}</li>
+                    <li class="list-group-item"><span class="text-phone-arena me-3">Memory:</span> ${phone.mainFeatures.memory ? phone.mainFeatures.memory : "Memory Info Not Found"}</li>
+                    <li class="list-group-item ${!sensors ? "d-none": ''}">${sensors ? sensors.textContent : ''}</li>
                 </ul>
             </div>
         `;
