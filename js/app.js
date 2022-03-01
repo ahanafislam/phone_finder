@@ -1,6 +1,8 @@
 // Get HTML element by ID
 const getElement = id => document.getElementById(id);
 
+let storeValue =''; // For Store Search Value
+
 // Toggle HTML element
 const toggleElement = (element, show) => {
     if(show) {
@@ -12,30 +14,39 @@ const toggleElement = (element, show) => {
 }
 
 
-// Search Phone
+// Search Phone By User Input
 const searchPhone = () => {
     const searchInput = getElement('search-input');
-    const searchValue = searchInput.value;
     const spinner = getElement('spinner');
     const result = getElement('result');
+    const searchValue = searchInput.value;
     searchInput.value = ``;
 
     // Display Spinner
     toggleElement(spinner, true);
     result.classList.add('visually-hidden');
     loadSearchResult(searchValue);
+    storeSearchVal(searchValue);
+}
+
+// Set Search Value to storeValue variable
+const storeSearchVal = searchValue => storeValue = searchValue ;
+
+// Show All data function
+const showAllResult = () => {
+    loadSearchResult(storeValue, true);
 }
 
 // Fetch Search Result
-const loadSearchResult = searchValue => {
+const loadSearchResult = (searchValue, showAll = false) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`;
     fetch(url)
         .then(res => res.json())
-        .then(data => displaySearchResult(data));
+        .then(data => displaySearchResult(data, showAll));
 }
 
 // Display Search Result
-const displaySearchResult = data => {
+const displaySearchResult = (data, showAll) => {
     const result = getElement('result');
     const phoneDetail = getElement('phone-detail');
     const message = getElement('message');
@@ -47,9 +58,11 @@ const displaySearchResult = data => {
     phoneDetail.textContent = ``;
 
     if(data.status) {
-        const phoneList = data.data;
         toggleElement(message,false);
-        phoneList.slice(0,20).forEach(phone => {
+        let phoneList = [];
+        !showAll ? phoneList = data.data.slice(0,20) : phoneList = data.data;
+
+        phoneList.forEach(phone => {
             const div = document.createElement('div');
             div.classList.add('col');
             div.innerHTML = `
@@ -64,6 +77,15 @@ const displaySearchResult = data => {
             `;
             result.appendChild(div);
         });
+
+        // If Search result in more then 20
+        if(data.data.length > 20 && !showAll) {
+            const viewAllBtn = document.createElement('button');
+            viewAllBtn.classList.add('view-all-btn', 'mx-auto','my-5');
+            viewAllBtn.innerText = "Show All";
+            viewAllBtn.onclick = showAllResult;
+            result.appendChild(viewAllBtn);
+        }
     }
     else {
         toggleElement(message,true);
