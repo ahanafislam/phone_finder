@@ -72,7 +72,7 @@ const displayPhoneDetail = data => {
         const div = document.createElement('div');
         div.classList.add("card", "shadow", "p-4", "text-center", "text-md-start", "mx-auto");
         let sensors = '';
-        // If phone object have sensors 
+        // If phone object have sensors property
         if(phone.mainFeatures.sensors) {
             const li = document.createElement('li')
             li.innerText = `<span class="text-phone-arena me-3">Sensors:</span>`
@@ -99,7 +99,7 @@ const displayPhoneDetail = data => {
             <hr class="bg-phone-arena my-3">
             <div class="p-2">
                 <h5 class="text-center text-phone-arena">Main Features</h5>
-                <ul class="list-group list-group-flush text-start">
+                <ul class="list-group list-group-flush text-start mb-3">
                     <li class="list-group-item"><span class="text-phone-arena me-3">Storage:</span> ${phone.mainFeatures.storage}</li>
                     <li class="list-group-item"><span class="text-phone-arena me-3">Display:</span> ${phone.mainFeatures.displaySize}</li>
                     <li class="list-group-item"><span class="text-phone-arena me-3">Chipset:</span> ${phone.mainFeatures.chipSet ? phone.mainFeatures.chipSet : "Chipset Info Not Found" }</li>
@@ -108,6 +108,24 @@ const displayPhoneDetail = data => {
                 </ul>
             </div>
         `;
+
+        // if phone object have others property
+        if(phone.others) {
+           const others = phone.others;
+           const divForOther = document.createElement('div');
+           const ul = document.createElement('ul');
+           ul.classList.add("list-group", "list-group-flush", "text-start");
+           divForOther.innerHTML = `<h5 class="text-center text-phone-arena">Other Features</h5>`;
+           for(const key in others) {
+                const otherLi = document.createElement('li');
+                otherLi.classList.add('list-group-item');
+                otherLi.innerHTML = `<span class="text-phone-arena me-3">${key}:</span> ${others[key]}`;
+                ul.appendChild(otherLi);            
+           }
+           divForOther.appendChild(ul);
+           div.appendChild(divForOther);
+        }
         phoneDetail.appendChild(div);
     }
+
 }
