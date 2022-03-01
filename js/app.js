@@ -11,11 +11,23 @@ const toggleElement = (element, show) => {
     }
 }
 
-// Fetch Search Result
-const loadSearchResult = () => {
+
+// Search Phone
+const searchPhone = () => {
     const searchInput = getElement('search-input');
     const searchValue = searchInput.value;
+    const spinner = getElement('spinner');
+    const result = getElement('result');
     searchInput.value = ``;
+
+    // Display Spinner
+    toggleElement(spinner, true);
+    result.classList.add('visually-hidden');
+    loadSearchResult(searchValue);
+}
+
+// Fetch Search Result
+const loadSearchResult = searchValue => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`;
     fetch(url)
         .then(res => res.json())
@@ -27,13 +39,17 @@ const displaySearchResult = data => {
     const result = getElement('result');
     const phoneDetail = getElement('phone-detail');
     const message = getElement('message');
+    // Hide Spinner Show Result
+    toggleElement(getElement('spinner'), false);
+    result.classList.remove('visually-hidden');
+
     result.textContent = ``;
     phoneDetail.textContent = ``;
 
     if(data.status) {
         const phoneList = data.data;
         toggleElement(message,false);
-        phoneList.forEach(phone => {
+        phoneList.slice(0,20).forEach(phone => {
             const div = document.createElement('div');
             div.classList.add('col');
             div.innerHTML = `

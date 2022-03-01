@@ -31,9 +31,15 @@ h2 {
     max-width: 55rem;
 }
 
-/* Style Not found message */
-#message {
+/* Hide Not found message and spinner */
+#message, #spinner{
     display: none;
+}
+
+/* Style spinner */
+.spinner-border {
+    width: 3em;
+    height: 3em;
 }
 
 /* Style For Button */

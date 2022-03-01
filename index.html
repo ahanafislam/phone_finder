@@ -25,16 +25,23 @@
         <section class="col-md-9 mx-auto my-3">
             <div class="input-group mb-4">
                 <input id="search-input" type="text" class="form-control" placeholder="Search phone" aria-label="Recipient's username" aria-describedby="search-btn">
-                <button onclick="loadSearchResult()" class="btn bg-phone-arena" type="button" id="search-btn"><i class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
+                <button onclick="searchPhone()" class="btn bg-phone-arena" type="button" id="search-btn"><i class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
             </div>
         </section>
         <!-- End Search Section -->
 
         <!-- Start Detail Section -->
         <section id="phone-detail" class="mb-5">
+            <!-- Here Phone Detail Will Show -->
         </section>
         <!-- End Detail Section -->
-
+        <!-- Start Spinner Section -->
+        <section id="spinner" class="position-absolute top-50 start-50 translate-middle">
+            <div class="spinner-border text-phone-arena display-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+                </div>
+        </section>
+        <!-- End Spinner Section -->
         <!-- Start Search Not Found Message Section -->
         <section id="message">
             <h1 class="h2 text-center text-info"><i class="fa-solid fa-triangle-exclamation me-3"></i>Sorry your search result did not found</h1>
@@ -43,7 +50,7 @@
         
         <!-- Start Search Result Section -->
         <section id="result" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mx-auto g-5">
-            <!-- Here The Search will diplay -->
+            <!-- Here The Search Result will diplay -->
         </section>
         <!-- End Search Result Section -->
     </main>
