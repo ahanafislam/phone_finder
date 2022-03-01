@@ -1,9 +1,21 @@
 // Get HTML element by ID
 const getElement = id => document.getElementById(id);
 
+// Toggle HTML element
+const toggleElement = (element, show) => {
+    if(show) {
+        element.style.display = 'block';
+    }
+    else {
+        element.style.display = 'none';
+    }
+}
+
 // Fetch Search Result
 const loadSearchResult = () => {
-    const searchValue = getElement('search-input').value;
+    const searchInput = getElement('search-input');
+    const searchValue = searchInput.value;
+    searchInput.value = ``;
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`;
     fetch(url)
         .then(res => res.json())
@@ -14,11 +26,13 @@ const loadSearchResult = () => {
 const displaySearchResult = data => {
     const result = getElement('result');
     const phoneDetail = getElement('phone-detail');
+    const message = getElement('message');
     result.textContent = ``;
     phoneDetail.textContent = ``;
 
     if(data.status) {
         const phoneList = data.data;
+        toggleElement(message,false);
         phoneList.forEach(phone => {
             const div = document.createElement('div');
             div.classList.add('col');
@@ -36,7 +50,7 @@ const displaySearchResult = data => {
         });
     }
     else {
-        console.log("Result not found");
+        toggleElement(message,true);
     }
 }
 

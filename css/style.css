@@ -28,7 +28,12 @@ h2 {
 
 /* Phone details Style */
 #phone-detail .card {
-    max-width: 50rem;
+    max-width: 55rem;
+}
+
+/* Style Not found message */
+#message {
+    display: none;
 }
 
 /* Style For Button */
